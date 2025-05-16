@@ -1,8 +1,8 @@
 <template>
     <div>
-        <h1>Welcome to the homepage</h1>
+        <h1>Oopsie Oracle</h1>
         <AppAlert>
-            This is an auto-imported component
+            Ask your deeply concerned questions and he shall answer them with great expertise!
         </AppAlert>
     </div>
 </template>
