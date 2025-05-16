@@ -1,5 +1,6 @@
 <template>
   <section>
-    <p>This page will be displayed at the /oracle route.</p>
+    <input type="text" />
+    <button>Submit Question</button>
   </section>
 </template>
