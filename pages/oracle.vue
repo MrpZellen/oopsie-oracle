@@ -10,8 +10,27 @@
   </section>
 </template>
 
+<!-- 
+  
+  export default {
+    setup() {
+      const inputText = ref('')
+      const submittedText = ref([])
+      
+      function submit() {
+        submittedText.value.push(inputText.value.trim())
+        inputText.value = ''
+      }
 
+      return {
+        inputText,
+        submittedText,
+        submit
+      }
+    }
+  } -->
 <script setup lang="js">
+import {ref} from 'vue'
 const tf = require('@tensorflow/tfjs');
 const use = require('@tensorflow-models/universal-sentence-encoder');
 const { intents } = require('./intents');
@@ -67,4 +86,5 @@ function startChatbot() {
     console.log(`Oracle: ${response}`);
   });
 }
+
 </script>
