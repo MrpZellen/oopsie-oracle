@@ -3,8 +3,10 @@
     <div v-if="submittedText.length > 0">
       <p v-for="(submission, index) in submittedText" :key="index">{{ submission }}</p>
     </div>
-    <input type="text" v-model="inputText" @keyup.enter="submit"/>
-    <button @click="submit">Submit Question</button>
+    <div>
+      <input type="text" v-model="inputText" @keyup.enter="submit"/>
+      <button @click="submit">Submit Question</button>
+    </div>
   </section>
 </template>
 
