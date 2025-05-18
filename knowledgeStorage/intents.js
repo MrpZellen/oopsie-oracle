@@ -1,4 +1,4 @@
-const intents = {
+export const intents = {
  greeting: ['hello', 'hi', 'hey', 'good morning', 'good evening', 'howdy'],
  goodbye: ['bye', 'goodbye', 'see you later', 'farewell', 'catch you later'],
  thanks: ['thank you', 'thanks', 'much appreciated', 'thank you very much'],
@@ -6,5 +6,3 @@ const intents = {
     question: ['question', 'query', 'inquiry', 'ask', 'wondering'],
     
 };
-
-module.exports = { intents };

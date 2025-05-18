@@ -1,7 +1,9 @@
 <template>
   <section>
-    <div v-if="submittedText.length > 0">
-      <p v-for="(submission, index) in submittedText" :key="index">{{ submission }}</p>
+    <div v-if="submittedText != null"">
+      <div v-if="submittedText.length > 0">
+        <p v-for="(submission, index) in submittedText" :key="index">{{ submission }}</p>
+      </div>
     </div>
     <div>
       <input type="text" v-model="inputText" @keyup.enter="submit"/>
@@ -31,10 +33,10 @@
   } -->
 <script setup lang="js">
 import {ref} from 'vue'
-const tf = require('@tensorflow/tfjs');
-const use = require('@tensorflow-models/universal-sentence-encoder');
-const { intents } = require('./intents');
-const { responses } = require('./responses');
+import * as tf from '@tensorflow/tfjs'
+import * as use from '@tensorflow-models/universal-sentence-encoder'
+import { intents }   from '../knowledgeStorage/intents'
+import { responses } from '../knowledgeStorage/response'
 let model;
 use.load().then((loadedModel) => {
  model = loadedModel;
@@ -75,16 +77,11 @@ async function generateResponse(userInput) {
 
 //starts our guy!
 //TODO: refactor this to run in the browser.
-function startChatbot() {
-  const inputField = document.querySelector('input[type="text"]');
-  const submitButton = document.querySelector('button');
-  
-  submitButton.addEventListener('click', async () => {
-    const userInput = inputField.value;
+async function submit(event) {
+    const userInput = event.target.value;
     const response = await generateResponse(userInput);
     console.log(`User: ${userInput}`);
     console.log(`Oracle: ${response}`);
-  });
 }
 
 </script>
