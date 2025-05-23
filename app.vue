@@ -1,14 +1,11 @@
 <template>
-  <header>
-    <nav>
-      <ul>
-        <li><NuxtLink to="/">Home</NuxtLink></li>
-        <li><NuxtLink to="/oracle">Oracle</NuxtLink></li>
-        <li><NuxtLink to="/discussions">Past Discussions</NuxtLink></li>
-      </ul>
-    </nav>
-  </header>
-  <div>
+  <head>
+    <title>Oopsie Oracle</title>
+  </head>
+  <section>
     <NuxtPage />
-  </div>
+  </section>
+  <footer>
+    &copy;Emerging Platform For Insanity 2025
+  </footer>
 </template>
