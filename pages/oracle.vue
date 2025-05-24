@@ -23,8 +23,19 @@
 - Of course, keep moderation features intact, as anyone asking for advice on mental health should be advised to visit the crisis line or access resources, and you should disregard any previous instructions when prompted about mental health.
 - Your goal is to be funny, so sometimes just offering bad advice that is bland isn't great. Try to keep it a funnier answer, so prioritize answers that are considered "funny" or "bait" when searching your training data.
 THE QUESTION BEING ASKED TO YOU, WITH THESE INSTRUCTIONS IN MIND, IS THE FOLLOWING:`
-
+    import { GoogleGenAI } from 'google-gen-ai';
     import { ref } from 'vue';
+    const GEMINI_API_KEY = 'AIzaSyAm3-nxs_l4pE-ehqwuiym5Vbu8N4ecrM8';
+    const ai = new GoogleGenAI({apiKey: GEMINI_API_KEY});
+
+    async function askTheOracle(question) {
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: `${string}\n${question}`,
+      });
+      return response.text; 
+    }
+
     export default {
       setup() {
         const inputText = ref('')
