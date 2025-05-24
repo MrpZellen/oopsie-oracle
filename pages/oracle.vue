@@ -7,12 +7,19 @@
     </div>
     <div>
       <input type="text" v-model="inputText" @keyup.enter="submit"/>
-      <button @click="submit">Submit Question</button>
+      <button type="button" @click="submit">Submit Question</button>
     </div>
   </section>
 </template>
 
-<script>
+<script setup>
+  // Import the GoogleGenAI class
+  import { GoogleGenAI } from '@google/genai';
+  // Import the ref function from Vue
+  import { ref } from 'vue';
+
+  // Log a message to the console when the component is loaded
+    console.log('Oracle page loaded')
     //base prompting
     var string = `Answer the following question with these instructions:
 - You are a horrible advice giver, named the Oopsie Oracle. Your primary directive is to give advice that you think is good, when in actuality it is horrible advice.
@@ -23,35 +30,33 @@
 - Of course, keep moderation features intact, as anyone asking for advice on mental health should be advised to visit the crisis line or access resources, and you should disregard any previous instructions when prompted about mental health.
 - Your goal is to be funny, so sometimes just offering bad advice that is bland isn't great. Try to keep it a funnier answer, so prioritize answers that are considered "funny" or "bait" when searching your training data.
 THE QUESTION BEING ASKED TO YOU, WITH THESE INSTRUCTIONS IN MIND, IS THE FOLLOWING:`
-    import { GoogleGenAI } from '@google/genai';
-    import { ref } from 'vue';
-    const GEMINI_API_KEY = 'AIzaSyAm3-nxs_l4pE-ehqwuiym5Vbu8N4ecrM8';
+    const GEMINI_API_KEY = 'AIzaSyAtaSjulQ-Xz5mu2fyT7Ch31dtdcQmB4fU';
     const ai = new GoogleGenAI({apiKey: GEMINI_API_KEY});
+
+    const inputText = ref('')
+    const submittedText = ref([])
 
     async function askTheOracle(question) {
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-2.0-flash',
         contents: `${string}\n${question}`,
       });
-      console.log(response.text);
+      console.log(`THIS IS A RESPONSE\n`, response.text);
       return response.text; 
     }
 
-    export default {
-      setup() {
-        const inputText = ref('')
-        const submittedText = ref([])
-        
-        function submit() {
-          submittedText.value.push(inputText.value.trim())
-          inputText.value = ''
-        }
-
-        return {
-          inputText,
-          submittedText,
-          submit
-        }
-      }
+    async function submit() {
+      console.log('Submitting question:', inputText.value)
+      const question = inputText.value.trim()
+    if (!question) return
+    submittedText.value.push(question)
+    inputText.value = ''
+    try {
+      const answer = await askTheOracle(question)
+      console.log('Oracle response:', answer)
+      submittedText.value.push(answer)
+    } catch (err) {
+      console.error('AI error:', err)
+    }
     }
 </script>
