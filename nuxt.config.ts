@@ -5,6 +5,9 @@ export default defineNuxtConfig({
   css: [
     '~/assets/scss/main.scss'
   ],
+  plugins: [
+    '~/plugins/bootstrap-vue.client.js'
+  ],
   vite: {
     css: {
       preprocessorOptions: {
