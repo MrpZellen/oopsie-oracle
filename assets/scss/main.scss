@@ -5,9 +5,6 @@
 @import 'bootstrap/scss/mixins';
 @import 'bootstrap/scss/root';
 
-$primary: #663399;
-$spacer: 1rem;
-
 @import 'bootstrap/scss/reboot';
 @import 'bootstrap/scss/type';
 @import 'bootstrap/scss/images';
@@ -19,3 +16,31 @@ $spacer: 1rem;
 
 @import 'bootstrap/scss/utilities';
 @import 'bootstrap/scss/helpers';
+
+.oracle-heading {
+    color: $oracle-text-color;
+    -webkit-text-stroke: 1px $oracle-stroke-color;
+    text-shadow: 2px 2px 4px $oracle-shadow-color;
+
+    padding: $oracle-padding-y $oracle-padding-x;
+    min-height: $oracle-min-height;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: $oracle-border-radius;
+
+    @include media-breakpoint-down(md) {
+        font-size: 2.5rem;
+        padding: 2rem 1rem;
+        min-height: 150px;
+    }
+}
+
+.title-image {
+    background-image: $oracle-bg-image-path;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
