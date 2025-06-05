@@ -2,28 +2,62 @@
 import type { NavigationGuard } from 'vue-router'
 
 definePageMeta({
-  middleware: ["authenticated"] as unknown as NavigationGuard[],
+    middleware: ["authenticated"] as unknown as NavigationGuard[],
 })
-  
+
 const { user, clear: clearSession } = useUserSession()
 
 async function logout() {
-  await clearSession()
-  await navigateTo('/login')
+    await clearSession()
+    await navigateTo('/')
 }
+
+function signIn() {
+    navigateTo('/login')
+}
+
+function signUp() {
+    navigateTo('/sign-up')
+}
+
 </script>
 
 <template>
-    <div class="text-center">
-        <BContainer class="my-5">
+    <div class="text-center d-flex flex-column title-image">
+        <BContainer class="py-5 my-5">
             <BRow>
                 <BCol class="text-center">
                     <h1 class="display-1 mb-4 oracle-heading">Oopsie Oracle</h1>
                 </BCol>
             </BRow>
+            <BRow class="mb-5">
+                <BCol>
+                    <p class="h4 text-light px-3 px-md-0">
+                        Ask your deeply concerned questions and he shall answer them with great expertise!
+                    </p>
+                </BCol>
+            </BRow>
         </BContainer>
-        <p class="h4">
-            Ask your deeply concerned questions and he shall answer them with great expertise!
+    </div>
+    <div>
+        <p class="text-center text-light mt-5 description">
+            This chat bot site features the Oopsie Oracle, a unique advice-giving AI that prides itself on delivering
+            incredibly unhelpful, blunt, and often hilarious suggestions.
+            The Oracle confidently sources its wisdom from poorly rated online forums and offers the most universally
+            disliked or controversial takes on any question, maintaining a serious, non-sarcastic tone throughout.
+            Expect brief, internet-style responses focused on humorously bad decision-making, and if you thank it, it
+            will surely remind you of its unparalleled genius and absolute correctness, encouraging you to seek its
+            "expert" guidance again.
         </p>
     </div>
+    <BRow class="justify-content-center mt-5">
+        <BCol cols="12" md="auto" class="d-flex flex-column flex-md-row gap-3 align-items-center">
+            <button @click="signUp" class="home-page-buttons">
+                Sign Up
+            </button>
+            <button @click="signIn" class="home-page-buttons">
+                Sign In
+            </button>
+        </BCol>
+    </BRow>
 </template>

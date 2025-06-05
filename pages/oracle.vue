@@ -1,4 +1,8 @@
 <template>
+  <nav>
+    <a href="/discussions" class="text-black">Past Discussions</a>
+    <p>User's email here</p>
+  </nav>
   <section>
     <div v-if="submittedText != null">
       <div v-if="submittedText.length > 0">

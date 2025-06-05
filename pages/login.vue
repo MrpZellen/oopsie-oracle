@@ -23,6 +23,8 @@ async function login() {
 </script>
 
 <template>
+  <h1 class="text-center">Welcome Back!</h1>
+  <p class="text-center">Don't have an account? <a href="/sign-up" class="text-black">Create one!</a></p>
   <form @submit.prevent="login">
     <div v-if="invalidCredentials" class="h4 text-danger"><strong>Error! Must input a valid email and password!</strong></div>
     <input v-model="credentials.email" type="email" placeholder="Email" />

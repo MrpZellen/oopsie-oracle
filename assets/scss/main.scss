@@ -1,5 +1,5 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'bootstrap/scss/functions';
+@import 'variables';
 @import 'bootstrap/scss/variables';
 @import 'bootstrap/scss/maps';
 @import 'bootstrap/scss/mixins';
@@ -43,4 +43,69 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    width: 100vw;
+    min-height: 400px;
+    height: 20vh;
+    align-items: center;
+    overflow: hidden;
+
+    @include media-breakpoint-down(md) {
+        min-height: 300px;
+        height: 10vh;
+    }
+    @include media-breakpoint-up(xl) {
+        max-height: 500px;
+    }
+}
+
+.description {
+    background-color: rgba(161,84,38,255);
+    padding: 2rem 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    max-width: 1000px; 
+    margin-left: auto;
+    margin-right: auto;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    font-size: 18px;
+}
+
+.home-page-buttons {
+    background-color: rgba(24,94,108,255);
+    padding: 1.5rem 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    width: 400px;
+    font-size: 20px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+
+    @include media-breakpoint-down(md) {
+        width: 250px;
+        min-wdith: 200px;
+        max-width: 300px;
+    }
+}
+
+.box {
+
+}
+
+.message-bubbles {
+
+}
+
+.message-box {
+
+}
+
+body {
+    --bs-body-bg: rgb(18,50,63);
+    overflow-x: hidden;
 }
