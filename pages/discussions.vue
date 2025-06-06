@@ -14,9 +14,13 @@
 let valid = false
 let conversations: any = []
 const { loggedIn, session, user, clear, fetch } = await useUserSession()
+const userValue = {
+    user: user?.value?.username
+}
 async function getConversations() {
   $fetch('/api/getConversations', {
-    method: 'GET'
+    method: 'GET',
+    body: userValue
   })
   .then(async (result) => {
     // Refresh the session on client-side and redirect to the home page
