@@ -1,19 +1,19 @@
 <script setup lang="ts">
 
-const { fetch: refreshSession } = useUserSession()
+const { loggedIn, session, user, clear, fetch } = useUserSession()
 var invalidCredentials = useState<boolean>('invalidCredentials', () => false)
 const credentials = reactive({
   email: '',
   password: '',
 })
 async function login() {
+  console.log(credentials)
   $fetch('/api/login', {
     method: 'POST',
     body: credentials
   })
     .then(async () => {
       // Refresh the session on client-side and redirect to the home page
-      await refreshSession()
       await navigateTo('/')
     })
     .catch(() => {

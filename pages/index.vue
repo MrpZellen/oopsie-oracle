@@ -5,19 +5,22 @@ definePageMeta({
     middleware: ["authenticated"] as unknown as NavigationGuard[],
 })
 
-const { user, clear: clearSession } = useUserSession()
 
-async function logout() {
-    await clearSession()
-    await navigateTo('/')
-}
+const { user, session, loggedIn, clear: clearSession } = await useUserSession()
 
+await reloadNuxtApp()
 function signIn() {
     navigateTo('/login')
 }
 
 function signUp() {
     navigateTo('/sign-up')
+}
+function oracle() {
+  navigateTo('oracle')
+}
+function logout() {
+    navigateTo('/logout')
 }
 
 </script>
@@ -34,6 +37,9 @@ function signUp() {
                 <BCol>
                     <p class="h4 text-light px-3 px-md-0">
                         Ask your deeply concerned questions and he shall answer them with great expertise!
+                    </p>
+                    <p v-if="loggedIn" class="h4 text-light px-3 px-md-0">
+                        Welcome back, {{ user?.username }}
                     </p>
                 </BCol>
             </BRow>
@@ -55,8 +61,14 @@ function signUp() {
             <button @click="signUp" class="home-page-buttons">
                 Sign Up
             </button>
-            <button @click="signIn" class="home-page-buttons">
+            <button v-if="!loggedIn" @click="signIn" class="home-page-buttons">
                 Sign In
+            </button>
+            <button v-if="loggedIn" @click="oracle" class="home-page-buttons">
+                Oracle
+            </button>
+            <button v-if="loggedIn" @click="logout" class="home-page-buttons">
+                Logout
             </button>
         </BCol>
     </BRow>

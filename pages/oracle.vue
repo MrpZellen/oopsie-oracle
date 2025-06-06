@@ -3,7 +3,7 @@
     <NuxtLink to="/discussions" class="nav-link">
       <img src="assets/images/discussions-icon.png" alt="Past Discussions" class="nav-icon" />
     </NuxtLink>
-    <p class="user-display">Hello, username</p>
+    <p class="user-display">Hello, {{ user.username }}</p>
   </nav>
   <section class="oracle-container">
     <div class="conversation">
@@ -19,8 +19,12 @@
     <div class="message-box">
       <input class="message-input" type="text" v-model="inputText" placeholder="Enter your question..." @keyup.enter="submit" />
       <button class="message-submit" type="button" @click="submit">Submit Question</button>
+      <button type="button" @click="saveConversation">Save Conversation</button>
     </div>
   </section>
+  <div v-if="!loggedIn">
+    Nice try! Log in to use the oracle!
+  </div>
 </template>
 
 <script setup>
@@ -28,7 +32,7 @@
 import { GoogleGenAI } from '@google/genai';
 // Import the ref function from Vue
 import { ref } from 'vue';
-
+const { loggedIn, session, user, clear, fetch } = await useUserSession()
 // Log a message to the console when the component is loaded
 console.log('Oracle page loaded')
 var currentHistory = []
@@ -85,18 +89,36 @@ if (currentHistory.length > HISTORY_WIDTH) {
   currentHistory.shift(); // Remove the oldest message if we exceed the history width
 }
 
-async function submit() {
-  console.log('Submitting question:', inputText.value)
-  const question = inputText.value.trim()
-  if (!question) return
-  submittedText.value.push(question)
-  inputText.value = ''
-  try {
-    const answer = await askTheOracle(question)
-    console.log('Oracle response:', answer)
-    submittedText.value.push(answer)
-  } catch (err) {
-    console.error('AI error:', err)
-  }
-}
+    async function submit() {
+      console.log('Submitting question:', inputText.value)
+      const question = inputText.value.trim()
+    if (!question) return
+    submittedText.value.push(question)
+    inputText.value = ''
+    try {
+      const answer = await askTheOracle(question)
+      console.log('Oracle response:', answer)
+      submittedText.value.push(answer)
+    } catch (err) {
+      console.error('AI error:', err)
+    }
+    }
+    async function saveConversation() {
+      console.log()
+    const storage = reactive({
+      user: user.value.username,
+      newConvos: previousMessageHistory,
+    })
+      $fetch('/api/saveConversation', {
+    method: 'POST',
+    body: storage, 
+  })
+  .then(async () => {
+    // Refresh the session on client-side and redirect to the home page
+    //await navigateTo('/')
+  })
+  .catch(() => {
+    console.log('yuh oh, user issue')
+  })
+    }
 </script>

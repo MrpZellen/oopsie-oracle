@@ -1,7 +1,7 @@
-import { z } from 'zod'
 import mongoose from 'mongoose'
-import User from '~/model/user'
-
+import { z } from 'zod'
+import User from '~/model/users'
+import connectDB from '~/utils/db'
 const bodySchema = z.object({
     username: z.string().min(5),
     email: z.string().email(),
@@ -9,10 +9,10 @@ const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
+    await connectDB()
     console.log('reached the API!')
     let req = await readBody(event)
     const result = bodySchema.safeParse(req)
-
     if(!result.success) {
         return result.error
     }
@@ -21,14 +21,12 @@ export default defineEventHandler(async (event) => {
     //check if the username exists in the database
     //check if the email exists in the database
     //else, create a new user
-    const mongoSchema = new mongoose.Schema({
-        username: {type: String, required: true},
-        password: {type: String, required: true},
-        email: {type: String, required: true},
-        conversationHistory: {type: Array, required: false}
-    })
-
-    mongoose.model('Post', mongoSchema)
-    console.log('posted')
-
+    const makeUser = await User.create({
+        username: username,
+        password: password,
+        email: email,
+        conversationHistory: []
+    }).catch(err => console.error('Mongoose Error:', err))
+    console.log(makeUser)
+    mongoose.connection.close
 })
