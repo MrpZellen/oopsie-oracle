@@ -28,7 +28,7 @@ async function signUp() {
             <h1 class="text-center heading">Welcome!</h1>
             <p class="text-center subtext">Have an account? <NuxtLink to="/login">Sign in!</NuxtLink>
             </p>
-            <form @submit.prevent="login">
+            <form @submit.prevent="signUp">
                 <div v-if="invalidCredentials" class="h4 text-danger"><strong>Error! Must input a valid email and
                         password!</strong></div>
                 <input class="mb-3 inputs" v-model="credentials.username" type="text" placeholder="Username" />

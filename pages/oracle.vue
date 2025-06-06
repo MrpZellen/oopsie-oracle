@@ -3,7 +3,7 @@
     <NuxtLink to="/discussions" class="nav-link">
       <img src="assets/images/discussions-icon.png" alt="Past Discussions" class="nav-icon" />
     </NuxtLink>
-    <p class="user-display">Hello, username</p>
+    <p class="user-display">Hello, {{ user.username }}</p>
   </nav>
   <section class="oracle-container">
     <div class="conversation">

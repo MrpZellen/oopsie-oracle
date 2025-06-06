@@ -5,9 +5,10 @@ definePageMeta({
     middleware: ["authenticated"] as unknown as NavigationGuard[],
 })
 
-reloadNuxtApp()
 
-const { user, session, loggedIn, clear: clearSession } = useUserSession()
+const { user, session, loggedIn, clear: clearSession } = await useUserSession()
+
+await reloadNuxtApp()
 async function logout() {
     await clearSession()
     await navigateTo('/')
