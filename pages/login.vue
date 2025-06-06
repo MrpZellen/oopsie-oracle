@@ -7,11 +7,12 @@ const credentials = reactive({
   password: '',
 })
 async function login() {
+  console.log(credentials)
   $fetch('/api/login', {
     method: 'POST',
     body: credentials
   })
-  .then(async () => {
+  .finally(async () => {
     // Refresh the session on client-side and redirect to the home page
     await navigateTo('/')
   })

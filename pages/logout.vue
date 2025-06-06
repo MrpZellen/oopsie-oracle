@@ -10,7 +10,9 @@ async function logout() {
     console.log('logout failed!')
   })
 }
-logout()
+logout().finally(() => {
+    navigateTo('/')
+})
 </script>
 
 <template>

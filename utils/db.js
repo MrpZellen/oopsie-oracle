@@ -9,9 +9,10 @@ const connectDB = async () => {
     await mongoose.connect(uri, { dbName: 'oopsieOracle' })
     console.log('Is connected?', mongoose.connection.readyState)
     console.log('Connected to MongoDB');
-    console.log('Using DB:', (await mongoose.connection.asPromise()).name)
   } catch (error) {
     console.error('Error connecting to MongoDB:', error.message);
+  } finally {
+    return
   }
 };
 

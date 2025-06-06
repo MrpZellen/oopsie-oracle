@@ -102,7 +102,7 @@
     async function saveConversation() {
     const storage = reactive({
       newConvos: previousMessageHistory,
-      user: session.value.username
+      user: user?.username
     })
       $fetch('/api/saveConversation', {
     method: 'POST',

@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import mongoose from 'mongoose'
 import User from '~/model/users'
+import connectDB from '~/utils/db'
 
 const bodySchema = z.object({
   email: z.string().email(),
@@ -8,31 +9,35 @@ const bodySchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
+  await connectDB()
   console.log('reached api!')
   let req = await readBody(event)
   const result = bodySchema.safeParse({email: String(req.email), password: String(req.password)})
   if (!result.success) {
     return result.error
   }
+  const { email, password } = result.data
+  console.log(req.email, req.password)
   console.log("valid instance")
-  //then we send the user to mongoDB
-  const mongoSchema = new mongoose.Schema({
-    username: { type: String, required: true },
-    password: { type: String, required: true },
-    email: { type: String, required: true },
-    conversationHistory: {type: Array, required: false }
-  })
   //post it
-  const userId = await User.where("username").equals(req.username).select("_id")
-  if (!userId){
-    console.log("null userId")
-  }
-  //then we run our session.
-    await setUserSession(event, {
-      user: {
-        id: userId,
-        username: req.username
+  await User.findOne( { email: email } ).then(async (user) => {
+    console.log(user)
+      if (!user){
+        console.log("null userId")
       }
+      if (user?.password != password){
+        return {
+          error: 'NOT VALID'
+        }
+      }
+      //then we run our session.
+        await setUserSession(event, {
+          user: {
+            username: user.username
+          }
     })
+  })
+  
+    mongoose.connection.close()
     return {}
   })

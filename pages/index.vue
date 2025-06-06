@@ -5,8 +5,9 @@ definePageMeta({
     middleware: ["authenticated"] as unknown as NavigationGuard[],
 })
 
-const { user, loggedIn, clear: clearSession } = useUserSession()
+reloadNuxtApp()
 
+const { user, session, loggedIn, clear: clearSession } = useUserSession()
 async function logout() {
     await clearSession()
     await navigateTo('/')
@@ -37,6 +38,9 @@ function oracle() {
                 <BCol>
                     <p class="h4 text-light px-3 px-md-0">
                         Ask your deeply concerned questions and he shall answer them with great expertise!
+                    </p>
+                    <p v-if="loggedIn" class="h4 text-light px-3 px-md-0">
+                        Welcome back, {{ user?.username }}
                     </p>
                 </BCol>
             </BRow>

@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import { z } from 'zod'
 import User from '~/model/users'
 import connectDB from '~/utils/db'
@@ -27,4 +28,5 @@ export default defineEventHandler(async (event) => {
         conversationHistory: []
     }).catch(err => console.error('Mongoose Error:', err))
     console.log(makeUser)
+    mongoose.connection.close
 })
