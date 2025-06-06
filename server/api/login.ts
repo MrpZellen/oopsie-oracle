@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import mongoose from 'mongoose'
-import User from '~/model/user'
+import User from '~/model/users'
 
 const bodySchema = z.object({
   email: z.string().email(),
@@ -23,8 +23,6 @@ export default defineEventHandler(async (event) => {
     conversationHistory: {type: Array, required: false }
   })
   //post it
-  mongoose.model('Post', mongoSchema)
-  console.log("posted")
   const userId = await User.where("username").equals(req.username).select("_id")
   if (!userId){
     console.log("null userId")

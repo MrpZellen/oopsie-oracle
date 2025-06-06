@@ -13,7 +13,6 @@ async function login() {
   })
   .then(async () => {
     // Refresh the session on client-side and redirect to the home page
-    await refreshSession()
     await navigateTo('/')
   })
   .catch(() => {
