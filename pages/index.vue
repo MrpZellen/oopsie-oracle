@@ -9,11 +9,6 @@ definePageMeta({
 const { user, session, loggedIn, clear: clearSession } = await useUserSession()
 
 await reloadNuxtApp()
-async function logout() {
-    await clearSession()
-    await navigateTo('/')
-}
-
 function signIn() {
     navigateTo('/login')
 }
@@ -23,6 +18,9 @@ function signUp() {
 }
 function oracle() {
   navigateTo('oracle')
+}
+function logout() {
+    navigateTo('/logout')
 }
 
 </script>
@@ -68,6 +66,9 @@ function oracle() {
             </button>
             <button v-if="loggedIn" @click="oracle" class="home-page-buttons">
                 Oracle
+            </button>
+            <button v-if="loggedIn" @click="logout" class="home-page-buttons">
+                Logout
             </button>
         </BCol>
     </BRow>

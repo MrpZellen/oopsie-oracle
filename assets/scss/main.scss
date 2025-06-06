@@ -207,12 +207,15 @@
 
 .conversation {
     flex-grow: 1;
-    overflow-y: auto;
+    overflow-y: scroll;
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    scroll-behavior: smooth;
     gap: 1rem;
     color: #f0f0f0;
+    max-height: 700px;
+    scroll-snap-stop: normal;
     &::-webkit-scrollbar {
         width: 8px;
     }
