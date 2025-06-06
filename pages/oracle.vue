@@ -1,9 +1,9 @@
 <template>
   <div v-if="loggedIn">
   <nav>
-    <a href="/discussions" class="text-black">Past Discussions</a>
+    <a href="/discussions" class="text-black">Past Discussions for {{ user.username }}</a>
   </nav>
-  <section>
+  <section class="text-white">
     <div v-if="submittedText != null">
       <div v-if="submittedText.length > 0">
         <p v-for="(submission, index) in submittedText" :key="index">{{ submission }}</p>
@@ -27,9 +27,8 @@
   import { GoogleGenAI } from '@google/genai';
   // Import the ref function from Vue
   import { ref } from 'vue';
-
   // Log a message to the console when the component is loaded
-  const { loggedIn, session, user, clear, fetch } = useUserSession()
+    const { loggedIn, session, user, clear, fetch } = await useUserSession()
     console.log('Oracle page loaded')
     var currentHistory = []
     var previousMessageHistory = []
@@ -100,17 +99,18 @@
     }
     }
     async function saveConversation() {
+      console.log()
     const storage = reactive({
+      user: user.value.username,
       newConvos: previousMessageHistory,
-      user: user?.username
     })
       $fetch('/api/saveConversation', {
     method: 'POST',
-    body: storage
+    body: storage, 
   })
   .then(async () => {
     // Refresh the session on client-side and redirect to the home page
-    await navigateTo('/')
+    //await navigateTo('/')
   })
   .catch(() => {
     console.log('yuh oh, user issue')

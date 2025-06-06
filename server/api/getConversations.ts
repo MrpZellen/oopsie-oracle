@@ -9,12 +9,15 @@ export default defineEventHandler(async (event) => {
     console.log('reached the API!')
     let req = await readBody(event)
     console.log(req)
-    //post it
-    const addConvo = await Convo.create({
-        conversations: req.newConvos
+    let results
+    User.findOne({username: req.user}).then((result) => {
+        results = result?.conversationHistory
     })
-    User.where("username").equals(req.user).updateOne({}, {$push: {conversationHistory: addConvo._id}}).then(() => {
-        mongoose.connection.close()
-    })
-    return {}
+    let listOfConvo: any = []
+    results!.forEach((element: any) => {
+        Convo.findById(element).then((result) =>{
+            listOfConvo.push(result)
+        })
+    });
+    return {listOfConvo}
 })
