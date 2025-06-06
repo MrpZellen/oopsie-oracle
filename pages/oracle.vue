@@ -22,7 +22,6 @@
       <button type="button" @click="saveConversation">Save Conversation</button>
     </div>
   </section>
-  </div>
   <div v-if="!loggedIn">
     Nice try! Log in to use the oracle!
   </div>
