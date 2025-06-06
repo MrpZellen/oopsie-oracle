@@ -5,7 +5,7 @@
     </NuxtLink>
     <p class="user-display">Hello, username</p>
   </nav>
-  <section class="container">
+  <section class="oracle-container">
     <div class="conversation">
       <div v-for="(submission, index) in submittedText" :key="index">
         <div :class="{
