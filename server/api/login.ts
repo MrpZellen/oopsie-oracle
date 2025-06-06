@@ -30,7 +30,8 @@ export default defineEventHandler(async (event) => {
   //then we run our session.
     await setUserSession(event, {
       user: {
-        id: userId
+        id: userId,
+        username: req.username
       }
     })
     return {}

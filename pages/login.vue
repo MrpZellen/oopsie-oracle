@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-const { fetch: refreshSession } = useUserSession()
+const { loggedIn, session, user, clear, fetch } = useUserSession()
 var invalidCredentials = useState<boolean>('invalidCredentials', () => false)
 const credentials = reactive({
   email: '',

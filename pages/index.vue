@@ -5,7 +5,7 @@ definePageMeta({
     middleware: ["authenticated"] as unknown as NavigationGuard[],
 })
 
-const { user, clear: clearSession } = useUserSession()
+const { user, loggedIn, clear: clearSession } = useUserSession()
 
 async function logout() {
     await clearSession()
@@ -18,6 +18,9 @@ function signIn() {
 
 function signUp() {
     navigateTo('/sign-up')
+}
+function oracle() {
+  navigateTo('oracle')
 }
 
 </script>
@@ -55,8 +58,11 @@ function signUp() {
             <button @click="signUp" class="home-page-buttons">
                 Sign Up
             </button>
-            <button @click="signIn" class="home-page-buttons">
+            <button v-if="!loggedIn" @click="signIn" class="home-page-buttons">
                 Sign In
+            </button>
+            <button v-if="loggedIn" @click="oracle" class="home-page-buttons">
+                Oracle
             </button>
         </BCol>
     </BRow>

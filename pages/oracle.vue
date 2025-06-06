@@ -1,7 +1,7 @@
 <template>
+  <div v-if="loggedIn">
   <nav>
     <a href="/discussions" class="text-black">Past Discussions</a>
-    <p>User's email here</p>
   </nav>
   <section>
     <div v-if="submittedText != null">
@@ -12,8 +12,14 @@
     <div>
       <input type="text" v-model="inputText" @keyup.enter="submit"/>
       <button type="button" @click="submit">Submit Question</button>
+      
+      <button type="button" @click="saveConversation">Save Conversation</button>
     </div>
   </section>
+  </div>
+  <div v-if="!loggedIn">
+    Nice try! Log in to use the oracle!
+  </div>
 </template>
 
 <script setup>
@@ -23,6 +29,7 @@
   import { ref } from 'vue';
 
   // Log a message to the console when the component is loaded
+  const { loggedIn, session, user, clear, fetch } = useUserSession()
     console.log('Oracle page loaded')
     var currentHistory = []
     var previousMessageHistory = []
@@ -91,5 +98,22 @@
     } catch (err) {
       console.error('AI error:', err)
     }
+    }
+    async function saveConversation() {
+    const storage = reactive({
+      newConvos: previousMessageHistory,
+      user: session.value.username
+    })
+      $fetch('/api/saveConversation', {
+    method: 'POST',
+    body: storage
+  })
+  .then(async () => {
+    // Refresh the session on client-side and redirect to the home page
+    await navigateTo('/')
+  })
+  .catch(() => {
+    console.log('yuh oh, user issue')
+  })
     }
 </script>
